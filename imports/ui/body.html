@@ -2,16 +2,20 @@
   <div class="container">
     <header>
       <h1>Todo List</h1>
+
+      <form class="new-todo">
+        <input type="text" name="todo" placeholder="Type to add new todos">
+      </form>
     </header>
 
     <ul>
-      {{#each tasks}}
-        {{> task}}
+      {{#each todos}}
+        {{> todo}}
       {{/each}}
     </ul>
   </div>
 </body>
 
-<template name="task">
+<template name="todo">
   <li>{{text}}</li>
 </template>
