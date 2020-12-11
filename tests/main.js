@@ -1,3 +1,7 @@
+/*
+  A JavaScript entry point when running tests
+ */
+
 import assert from "assert";
 
 describe("meteor-simple-todos", function () {

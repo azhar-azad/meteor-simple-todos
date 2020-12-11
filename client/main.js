@@ -1,3 +1,7 @@
+/*
+A JavaScript entry point loaded on the client
+ */
+
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
