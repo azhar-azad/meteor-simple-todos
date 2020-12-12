@@ -3,6 +3,12 @@ import { Meteor } from 'meteor/meteor';
 
 import './todo.html';
 
+Template.todo.helpers({
+  isOwner() {
+    return this.owner === Meteor.userId();
+  }
+});
+
 Template.todo.events({
   'click .toggle-checked'() {
     // Set the checked property to the opposite of its current value
@@ -11,6 +17,10 @@ Template.todo.events({
   
   'click .delete'() {
     Meteor.call('todos.remove', this._id);
+  },
+  
+  'click .toggle-private'() {
+    Meteor.call('todos.setPrivate', this._id, !this.private);
   }
 });
 

@@ -1,6 +1,16 @@
 <template name="todo">
-  <li class="{{#if checked}}checked{{/if}}">
+  <li class="{{#if checked}}checked{{/if}} {{#if private}}private{{/if}}">
     <input type="checkbox" checked="{{checked}}" class="checkbox toggle-checked">
+
+    {{#if isOwner}}
+      <button class="toggle-private">
+        {{#if private}}
+          Private
+        {{else}}
+          Public
+        {{/if}}
+      </button>
+    {{/if}}
 
     <span class="text"><strong>{{username}}</strong> - {{text}}</span>
 

@@ -22,6 +22,7 @@ Template.body.onCreated(function bodyOnCreated() {
   (as this is where the checkbox's state will be stored) when it is first created.
    */
   this.state = new ReactiveDict();
+  Meteor.subscribe('todos');
 });
 
 Template.body.helpers({

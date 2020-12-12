@@ -4,6 +4,19 @@ import { check } from 'meteor/check';
 
 export const Todos = new Mongo.Collection('todos');
 
+if (Meteor.isServer) {
+  // This code only runs on the server
+  // Only publish todos that are public or belong to the current user
+  Meteor.publish('todos', function todosPublication() {
+    return Todos.find({
+      $or: [
+        { private: { $ne: true } },
+        { owner: this.userId }
+      ]
+    });
+  });
+}
+
 Meteor.methods({
   'todos.insert'(text) {
     check(text, String);
@@ -36,6 +49,12 @@ Meteor.methods({
   'todos.remove'(todoId) {
     check(todoId, String);
     
+    const todo = Todos.findOne(todoId);
+    if (todo.owner !== this.userId) {
+      // If the todo is private, make sure only the owner can delete it
+      throw new Meteor.Error('not-authorized');
+    }
+    
     Todos.remove(todoId);
     /*
     The remove function takes one argument,
@@ -46,6 +65,12 @@ Meteor.methods({
   'todos.setChecked'(todoId, setChecked) {
     check(todoId, String);
     check(setChecked, Boolean);
+    
+    const todo = Todos.findOne(todoId);
+    if (todo.owner !== this.userId) {
+      // If the todo is private, make sure only the owner can check it off
+      throw new Meteor.Error('not-authorized');
+    }
     
     Todos.update(todoId, { $set: { checked: setChecked } });
     /*
@@ -58,6 +83,19 @@ Meteor.methods({
     The update parameter uses $set to toggle the checked field,
     which will represent whether the task has been completed.
      */
-  }
+  },
   
+  'todos.setPrivate'(todoId, setToPrivate) {
+    check(todoId, String);
+    check(setToPrivate, Boolean);
+    
+    const todo = Todos.findOne(todoId);
+    
+    // Make sure only the todo owner can make a todo private
+    if (todo.owner !== this.userId) {
+      throw new Meteor.Error('not-authorized');
+    }
+    
+    Todos.update(todoId, { $set: { private: setToPrivate } });
+  }
 });
