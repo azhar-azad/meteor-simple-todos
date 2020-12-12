@@ -2,7 +2,7 @@ import { Template } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Meteor } from 'meteor/meteor'; // while using accounts-ui, accounts-password package
 
-import { Todos } from "../api/todos";
+import { Todos } from "../api/todos.js";
 
 import './body.html';
 import './todo';
@@ -49,27 +49,10 @@ Template.body.events({
     event.preventDefault();
     
     // Get value from form element
-    const todo = event.target.todo.value;
+    const todoName = event.target.todo.value;
     
     // Insert a task(todo) into the collection
-    Todos.insert({
-      text: todo, // todo name
-      createdAt: new Date(), // time of the todo creation
-      owner: Meteor.userId(), // the _id of the user that created the todo
-      username: Meteor.user().username // the username of the user that created the todo
-    });
-    /*
-    A new task is added to the Todos collection by calling Todos.insert().
-    Any properties to the task object can be assigned, such as the time created,
-    since there is no need to define a schema for the collection.
-    
-    owner and username fields are added so that
-    the app can only display the new task input field to logged in users,
-    and also to show which user created each task.
-    
-    The username is saved directly in the todo object so that
-    the app doesn't have to look up the user every time it displays the task.
-     */
+    Meteor.call('todos.insert', todoName);
     
     // Clear form
     event.target.todo.value = '';
