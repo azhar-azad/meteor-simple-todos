@@ -8,10 +8,19 @@
         <input type="checkbox">Hide Completed Tasks
       </label>
 
+      <!--
+      This template is given by meteor.
+      meteor add accounts-ui accounts-password
+      -->
+      {{> loginButtons}}
+
+      <!--Only show the form if the user is logged in -->
       <!--Form to add new todo-->
-      <form class="new-todo">
-        <input type="text" name="todo" placeholder="Type to add new todos">
-      </form>
+      {{#if currentUser}}
+        <form class="new-todo">
+          <input type="text" name="todo" placeholder="Type to add new todos">
+        </form>
+      {{/if}}
     </header>
 
     <!--
