@@ -1,13 +1,23 @@
 <body>
   <div class="container">
     <header>
-      <h1>Todo List</h1>
+      <h1>Todo List <span class="incompleteCount">{{incompleteCount}}</span></h1>
 
+      <!--Checkbox to only see incomplete todos-->
+      <label class="hide-completed">
+        <input type="checkbox">Hide Completed Tasks
+      </label>
+
+      <!--Form to add new todo-->
       <form class="new-todo">
         <input type="text" name="todo" placeholder="Type to add new todos">
       </form>
     </header>
 
+    <!--
+    All todos are sent from body.js
+    For each todo show the todo template(todo.html)
+    -->
     <ul>
       {{#each todos}}
         {{> todo}}
