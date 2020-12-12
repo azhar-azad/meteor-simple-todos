@@ -3,6 +3,7 @@
  */
 
 import assert from "assert";
+import '../imports/api/todos.test.js';
 
 describe("meteor-simple-todos", function () {
   it("package.json has correct name", async function () {
