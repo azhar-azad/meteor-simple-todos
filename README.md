@@ -6,7 +6,12 @@ See demo at ....
 This app is created and powered by meteor framework. Learn about meteor [here](https://www.meteor.com/).
 
 ### Features
-1. 
+1. Multi-user support. 
+2. Users can share their todos with other users by making them public. 
+3. Incomplete tasks count shown. 
+4. Only logged in users can input new todo. 
+5. Todos are published based on their privacy status. 
+6. Only owner will get write privileges (can update, delete his/hers todo; others are read-only).  
 
 ## Prerequisite
 Install [meteor](https://www.meteor.com/install) in your computer.
